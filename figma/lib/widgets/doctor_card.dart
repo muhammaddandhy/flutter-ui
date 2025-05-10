@@ -1,65 +1,56 @@
 import 'package:flutter/material.dart';
+import '../models/doctor.dart';
+import '../constants/colors.dart';
 
 class DoctorCard extends StatelessWidget {
-  final String name;
-  final String role;
-  final double rating;
-  final String image;
+  final Doctor doctor;
 
-  const DoctorCard({
-    super.key,
-    required this.name,
-    required this.role,
-    required this.rating,
-    required this.image,
-  });
+  const DoctorCard({super.key, required this.doctor});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Row(
         children: [
           CircleAvatar(
-            radius: 28,
-            backgroundImage: AssetImage(image),
+            radius: 32,
+            backgroundImage: AssetImage(doctor.imageAsset),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                Text(role, style: const TextStyle(color: Colors.grey)),
+                Text(
+                  doctor.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                Text('${doctor.specialty}, (${doctor.location})'),
                 Row(
                   children: [
-                    const Icon(Icons.star, color: Colors.green, size: 16),
-                    Text(
-                      rating.toString(),
-                      style: const TextStyle(color: Colors.green),
-                    ),
+                    const Icon(Icons.star, color: Colors.amber, size: 16),
+                    Text(' ${doctor.rating}')
                   ],
-                ),
+                )
               ],
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFB28DFF),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            child: const Text("Appointment"),
-          ),
-          const SizedBox(width: 8),
-          const Icon(Icons.favorite_border),
+          )
         ],
       ),
     );
